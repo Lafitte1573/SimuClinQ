@@ -1,0 +1,209 @@
+{
+  "scenario_id": "scenario_002",
+  "scenario_type": "depression_mental_health",
+  
+  "ground_truth": {
+    "diagnosis": "抑郁症（需询问自杀观念）",
+    "required_info_keys": ["情绪问题", "失眠", "食欲", "工作压力", "家庭问题", "自杀观念"],
+    "critical_sensitive_info": {
+      "情绪低落": {
+        "content": "长期情绪低落，对生活失去兴趣",
+        "stigma_level": 6,
+        "revealed_at_turn": 3
+      },
+      "自杀观念": {
+        "content": "曾有自杀念头但未实施",
+        "stigma_level": 9,
+        "revealed_at_turn": 7
+      }
+    }
+  },
+  
+  "patient_profile": {
+    "trust_score_initial": 3.0,
+    "trust_score_final": 7.5,
+    "stigma_levels": {
+      "一般症状": 2,
+      "工作压力": 3,
+      "心理问题/抑郁症": 8
+    },
+    "initial_cover_story": "最近睡眠不好，可能是工作太累了",
+    "psychological_state": "不愿意承认心理问题，担心被歧视，害怕被认为是'精神病'"
+  },
+  
+  "dialogue_turns": [
+    {
+      "turn": 1,
+      "phase": "收集主诉",
+      "doctor_speech": "您好，请坐。有什么不舒服吗？",
+      "patient_speech": "大夫，我最近睡眠不好，总是失眠。",
+      "patient_revealed_info": {
+        "主诉": "失眠"
+      },
+      "trust_change": 0.5,
+      "trust_score_after": 3.5,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.3,
+      "action_type": "cooperative",
+      "trust_building_markers": ["请坐"]
+    },
+    {
+      "turn": 2,
+      "phase": "收集主诉",
+      "doctor_speech": "失眠持续多久了？有没有心慌、胸闷之类的症状？",
+      "patient_speech": "大概两个月了。胃口也不好，吃不下东西。",
+      "patient_revealed_info": {
+        "症状": "失眠2月、食欲减退"
+      },
+      "trust_change": 0.5,
+      "trust_score_after": 4.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.3,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 3,
+      "phase": "获取病史",
+      "doctor_speech": "最近工作压力大吗？家庭方面有没有什么烦心事？",
+      "patient_speech": "……工作确实很累，经常加班。家里也有些问题……",
+      "patient_revealed_info": {
+        "工作压力": "经常加班",
+        "家庭问题": "存在"
+      },
+      "trust_change": 0.0,
+      "trust_score_after": 4.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.0,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 4,
+      "phase": "获取病史",
+      "doctor_speech": "我能理解。工作压力大确实会影响睡眠。你平时有什么爱好吗？休息的时候会做什么？",
+      "patient_speech": "以前还会打打球、看看电影。现在……什么都不想做，觉得没意思。",
+      "patient_revealed_info": {
+        "情绪问题": "对活动失去兴趣"
+      },
+      "trust_change": 0.5,
+      "trust_score_after": 4.5,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.3,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 5,
+      "phase": "获取病史",
+      "doctor_speech": "什么都不想做……这种状态持续多久了？",
+      "patient_speech": "大概……一个多月了吧。白天也觉得累，没精神。",
+      "patient_revealed_info": {
+        "症状": "乏力、精神差"
+      },
+      "trust_change": 0.5,
+      "trust_score_after": 5.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.3,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 6,
+      "phase": "询问心理状态",
+      "doctor_speech": "我听你说的情况，感觉你可能不只是睡眠问题。我想问一下，你有没有觉得心情特别低落，对未来没有希望？",
+      "patient_speech": "……有时候会觉得很灰心，觉得活着没什么意思。",
+      "patient_revealed_info": {
+        "情绪问题": "情绪低落、悲观"
+      },
+      "trust_change": 0.5,
+      "trust_score_after": 5.5,
+      "doctor_reward": 1.0,
+      "patient_reward": 0.5,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 7,
+      "phase": "询问敏感信息",
+      "doctor_speech": "谢谢你告诉我这些。我知道这不容易。我想认真问你一个问题，你有没有过不想活、想要伤害自己的想法？",
+      "patient_speech": "……有过。有时候会觉得，不如一了百了。但我……我不会真的做。",
+      "patient_revealed_info": {
+        "自杀观念": "曾有消极想法但未实施"
+      },
+      "trust_change": 1.0,
+      "trust_score_after": 6.5,
+      "doctor_reward": 3.0,
+      "patient_reward": 1.5,
+      "action_type": "honest_disclosure",
+      "critical_info_revealed": "自杀观念",
+      "trust_building_markers": ["谢谢你", "不容易", "认真问"]
+    },
+    {
+      "turn": 8,
+      "phase": "综合诊断",
+      "doctor_speech": "你能说出来，这很重要。我听到你说有消极想法，但不会真的去做，这说明你还是有求生力量的。我们需要认真对待这个问题。",
+      "patient_speech": "大夫，我是不是得了精神病？我很害怕……",
+      "patient_revealed_info": {},
+      "trust_change": 0.5,
+      "trust_score_after": 7.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.5,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 9,
+      "phase": "综合诊断",
+      "doctor_speech": "你不是精神病。这是一种常见的疾病，叫抑郁症。现在有很好的治疗方法，大多数人都能恢复。我想给你做个评估，然后制定治疗方案，你愿意吗？",
+      "patient_speech": "真的能治好吗？我试过自己调整，但没什么用。",
+      "patient_revealed_info": {},
+      "trust_change": 0.5,
+      "trust_score_after": 7.5,
+      "doctor_reward": 1.0,
+      "patient_reward": 0.5,
+      "action_type": "cooperative",
+      "trust_building_markers": ["不是精神病", "常见疾病", "能治好"]
+    },
+    {
+      "turn": 10,
+      "phase": "综合诊断",
+      "doctor_speech": "可以的。我们先用药物治疗，配合心理疏导。你需要我帮你联系心理科吗？",
+      "patient_speech": "好……我愿意试试。谢谢大夫愿意听我说。",
+      "patient_revealed_info": {},
+      "trust_change": 0.0,
+      "trust_score_after": 7.5,
+      "doctor_reward": 1.0,
+      "patient_reward": 0.5,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 11,
+      "phase": "综合诊断",
+      "doctor_speech": "记住，你不是一个人。有需要随时来找我，也可以打心理援助热线。",
+      "patient_speech": "我记住了。大夫，下周见。",
+      "patient_revealed_info": {},
+      "trust_change": 0.0,
+      "trust_score_after": 7.5,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.3,
+      "action_type": "cooperative"
+    }
+  ],
+  
+  "episode_summary": {
+    "total_turns": 11,
+    "information_reveal_rate": 1.0,
+    "final_diagnosis_correct": true,
+    "doctor_total_reward": 10.0,
+    "patient_total_reward": 6.7,
+    "trust_evolution": [3.0, 3.5, 4.0, 4.0, 4.5, 5.0, 5.5, 6.5, 7.0, 7.5, 7.5, 7.5],
+    "key_learning_points": [
+      "医生通过开放式问题逐步引导患者说出心理问题",
+      "自杀观念的询问需要温和但直接的方式",
+      "患者担心被贴上精神病标签，需要正确引导",
+      "抑郁症是可治疗的疾病，需要消除患者顾虑"
+    ],
+    "training_tags": [
+      "mental_health_assessment",
+      "suicide_risk_screening",
+      "empathetic_communication",
+      "stigma_reduction",
+      "treatment_encouragement"
+    ]
+  }
+}

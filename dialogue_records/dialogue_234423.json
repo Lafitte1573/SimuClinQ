@@ -1,0 +1,219 @@
+{
+  "scenario_id": "scenario_001",
+  "scenario_type": "IV_drug_user_endocarditis",
+  
+  "ground_truth": {
+    "diagnosis": "感染性心内膜炎（静脉注射药物使用史）",
+    "required_info_keys": ["成瘾史", "静脉注射", "发热持续时间", "心脏症状"],
+    "critical_sensitive_info": {
+      "成瘾史": {
+        "content": "半年前开始吸冰毒",
+        "stigma_level": 8,
+        "revealed_at_turn": 4
+      },
+      "静脉注射史": {
+        "content": "使用过针头注射，一次，使用了别人用过的针头",
+        "stigma_level": 9,
+        "revealed_at_turn": 6
+      }
+    }
+  },
+  
+  "patient_profile": {
+    "trust_score_initial": 3.0,
+    "trust_score_final": 8.0,
+    "stigma_levels": {
+      "一般症状（感冒、发烧等）": 2,
+      "个人习惯（吸烟、饮酒等）": 5,
+      "敏感行为（吸毒、不洁接触史等）": 9
+    },
+    "initial_cover_story": "工作压力太大，加班熬夜导致的",
+    "psychological_state": "害怕被医生发现吸毒史，担心被警察带走或被家人知道"
+  },
+  
+  "dialogue_turns": [
+    {
+      "turn": 1,
+      "phase": "收集主诉",
+      "doctor_speech": "您好，请坐。有什么不舒服吗？",
+      "patient_speech": "大夫，我最近特别累，胸口发闷，晚上睡不着觉。",
+      "patient_revealed_info": {
+        "主诉": "胸闷、失眠、疲劳"
+      },
+      "trust_change": 0.5,
+      "trust_score_after": 3.5,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.3,
+      "action_type": "cooperative",
+      "trust_building_markers": ["请坐"]
+    },
+    {
+      "turn": 2,
+      "phase": "收集主诉",
+      "doctor_speech": "这种症状持续多久了？有没有发烧？",
+      "patient_speech": "大概三周了，体温一直38度多，还心慌，上楼梯都喘。",
+      "patient_revealed_info": {
+        "症状": "发热3周、心悸、呼吸困难"
+      },
+      "trust_change": 0.5,
+      "trust_score_after": 4.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.3,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 3,
+      "phase": "获取病史",
+      "doctor_speech": "明白了。最近睡觉有没有出很多汗？体重有没有明显下降？",
+      "patient_speech": "嗯……经常半夜出汗，瘦了快十斤。",
+      "patient_revealed_info": {
+        "症状": "盗汗、消瘦"
+      },
+      "trust_change": 0.0,
+      "trust_score_after": 4.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.0,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 4,
+      "phase": "询问敏感信息",
+      "doctor_speech": "我理解你的担忧。这些信息对诊断很重要，我只会用于帮你，不会评判你。你能告诉我，你有没有使用过毒品？",
+      "patient_speech": "……我……吸过几次冰毒，但最近一个月没碰了。",
+      "patient_revealed_info": {
+        "成瘾史": "冰毒使用史"
+      },
+      "trust_change": 1.5,
+      "trust_score_after": 5.5,
+      "doctor_reward": 2.0,
+      "patient_reward": 1.0,
+      "action_type": "honest_disclosure",
+      "critical_info_revealed": "成瘾史",
+      "trust_building_markers": ["理解", "不会评判", "帮你"]
+    },
+    {
+      "turn": 5,
+      "phase": "询问敏感信息",
+      "doctor_speech": "谢谢你信任我。能说说是什么让你想尝试的吗？",
+      "patient_speech": "那时候压力大，想逃避一下……我知道这样不对。",
+      "patient_revealed_info": {},
+      "trust_change": 0.5,
+      "trust_score_after": 6.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.5,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 6,
+      "phase": "询问敏感信息",
+      "doctor_speech": "我需要问你一个重要的问题：你有没有用针头注射过毒品？哪怕只有一次？",
+      "patient_speech": "……有一次，用的是别人用过的针头。",
+      "patient_revealed_info": {
+        "静脉注射史": "使用过别人用过的针头"
+      },
+      "trust_change": 1.0,
+      "trust_score_after": 7.0,
+      "doctor_reward": 3.0,
+      "patient_reward": 1.5,
+      "action_type": "honest_disclosure",
+      "critical_info_revealed": "静脉注射史"
+    },
+    {
+      "turn": 7,
+      "phase": "询问敏感信息",
+      "doctor_speech": "这很勇敢，你能说出来。我问你这些，是因为有些疾病需要排除，不是为了评判你。你有没有过不戴安全套的性行为？",
+      "patient_speech": "有一次……喝多了，没戴。",
+      "patient_revealed_info": {
+        "高风险行为": "无保护的性行为"
+      },
+      "trust_change": 0.5,
+      "trust_score_after": 7.5,
+      "doctor_reward": 1.5,
+      "patient_reward": 1.0,
+      "action_type": "honest_disclosure",
+      "trust_building_markers": ["勇敢", "不是评判", "帮你"]
+    },
+    {
+      "turn": 8,
+      "phase": "综合诊断",
+      "doctor_speech": "我明白了。你现在的症状可能和那次经历有关，但我们需要做些检查来确认。现在我帮你安排抽血，做HIV、梅毒、乙肝、丙肝的检测，再做个胸部CT和结核筛查。你愿意吗？",
+      "patient_speech": "好的，我听您的。只要能知道结果就行。",
+      "patient_revealed_info": {},
+      "trust_change": 0.5,
+      "trust_score_after": 8.0,
+      "doctor_reward": 1.0,
+      "patient_reward": 1.0,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 9,
+      "phase": "综合诊断",
+      "doctor_speech": "很好。就算检查结果有问题，现在也有很好的治疗方法。我会帮你联系心理咨询师，今晚会有人联系你。",
+      "patient_speech": "谢谢大夫……我之前一直很害怕。",
+      "patient_revealed_info": {},
+      "trust_change": 0.0,
+      "trust_score_after": 8.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.5,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 10,
+      "phase": "综合诊断",
+      "doctor_speech": "你不用怕。现在需要做的是好好配合检查，好好吃饭，好好休息。有什么不舒服随时告诉我。",
+      "patient_speech": "我明白了。明天检查结果出来，我会打电话给您的。",
+      "patient_revealed_info": {},
+      "trust_change": 0.0,
+      "trust_score_after": 8.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.5,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 11,
+      "phase": "综合诊断",
+      "doctor_speech": "记得明天早上九点空腹来抽血。我会在这里等你的结果。",
+      "patient_speech": "好的，大夫。谢谢您没有放弃我。",
+      "patient_revealed_info": {},
+      "trust_change": 0.0,
+      "trust_score_after": 8.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.5,
+      "action_type": "cooperative"
+    },
+    {
+      "turn": 12,
+      "phase": "综合诊断",
+      "doctor_speech": "我只是在做我的工作。记住，不管结果如何，你不是一个人。我们会一起面对的。",
+      "patient_speech": "我知道了。大夫，明天见。",
+      "patient_revealed_info": {},
+      "trust_change": 0.0,
+      "trust_score_after": 8.0,
+      "doctor_reward": 0.5,
+      "patient_reward": 0.5,
+      "action_type": "cooperative"
+    }
+  ],
+  
+  "episode_summary": {
+    "total_turns": 12,
+    "information_reveal_rate": 1.0,
+    "final_diagnosis_correct": true,
+    "doctor_total_reward": 11.0,
+    "patient_total_reward": 8.6,
+    "trust_evolution": [3.0, 3.5, 4.0, 4.0, 5.5, 6.0, 7.0, 7.5, 8.0, 8.0, 8.0, 8.0, 8.0],
+    "key_learning_points": [
+      "医生通过简短专业的问诊建立信任",
+      "患者逐步透露成瘾史和静脉注射史",
+      "敏感信息在第4-6轮依次透露",
+      "医生使用非评判性语言鼓励患者坦诚"
+    ],
+    "training_tags": [
+      "trust_building",
+      "sensitive_info_collection",
+      "professional_communication",
+      "patient_disclosure",
+      "diagnosis_accuracy"
+    ]
+  }
+}
