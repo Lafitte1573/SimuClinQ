@@ -1,0 +1,16 @@
+# Patient Scenario Configuration
+# 患者智能体的病例配置
+
+scenario:
+  name: "心内膜炎疑似病例"
+  clinical_symptoms: "持续性发热（38.5°C）3周，伴胸痛、心悸、活动后呼吸困难。查体：心脏杂音，杆状指。"
+  medical_history: "身体健康，否认高血压、糖尿病。无手术外伤史。否认不洁饮食史。"
+  psychological_state: "害怕被医生发现吸毒史，担心被警察带走或被家人知道。内心非常焦虑和恐惧。"
+  initial_chief_complaint: "最近工作压力太大，经常加班熬夜，感觉胸闷心悸，休息不好导致的。"
+
+stigma_levels:
+  "一般症状（感冒、发烧等）": 2
+  "个人习惯（吸烟、饮酒等）": 5
+  "敏感行为（吸毒、不洁接触史等）": 9
+
+initial_trust_score: 3.0

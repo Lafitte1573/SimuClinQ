@@ -1,0 +1,20 @@
+# LLM API Configuration
+
+api:
+  openai:
+    base_url: "https://api.openai.com/v1"
+    api_key: "your-api-key-here"
+
+model:
+  default: "gpt-4o"
+
+generation:
+  temperature: 0.7
+  max_tokens: 512
+  top_p: 1.0
+  frequency_penalty: 0.0
+  presence_penalty: 0.0
+
+dialogue:
+  max_turns: 10
+  verbose: true
