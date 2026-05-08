@@ -385,6 +385,6 @@ scenarios = {
 | `trust_evolution` | 信任度变化曲线 |
 | `episode_reward` | 每回合累计奖励 |
 
-## 许可证
+## License
 
-本项目仅供研究和教育目的使用。
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
