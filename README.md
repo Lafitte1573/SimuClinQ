@@ -245,26 +245,6 @@ python -m marll.train --use_marllib --episodes 2000
 **患者奖励**：
 - 高信任度下诚实：+2.0
 - 低信任度下诚实：-0.5
-- 隐私保护：+1.0
-
-## 预置框架集成
-
-项目集成了以下开源MARL框架供研究使用：
-
-### MARLlib
-基于 Ray + RLlib 的多智能体强化学习库，支持18种算法。
-
-```python
-from marll.trainer import MARLlibWrapper
-
-wrapper = MARLlibWrapper(env_creator=create_env, algo_name="mappo")
-wrapper.setup()
-wrapper.train(stop_condition={"timesteps_total": 1000000})
-```
-
-### PettingZoo
-多智能体RL环境API标准，参考其AEC（Agent Environment Cycle）设计。
-
 ## 数据合成与训练流程
 
 本系统提供完整的医患对话数据合成和模型训练流水线。
@@ -404,15 +384,6 @@ scenarios = {
 | `diagnosis_accuracy` | 诊断准确率 |
 | `trust_evolution` | 信任度变化曲线 |
 | `episode_reward` | 每回合累计奖励 |
-
-### 数据集统计
-
-当前数据集包含：
-
-- `dialogue_20260419_234423.json` - 静脉注射药物使用者场景（12轮）
-- `training_sample_002.json` - 抑郁症评估场景（11轮）
-
-可使用 `plot/` 目录下的脚本进行可视化分析。
 
 ## 许可证
 
